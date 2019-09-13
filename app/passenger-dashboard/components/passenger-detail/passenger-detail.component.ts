@@ -15,7 +15,7 @@ import { Passenger } from '../../models/passenger.interface';
         <input
           type="text"
           [value]="detail.fullname"
-          (input)="handleNameChange(name.value)"
+          (input)="handleInput(name.value)"
           #name
         >
       </div>
@@ -29,10 +29,10 @@ import { Passenger } from '../../models/passenger.interface';
       <div class="children">
         Children: {{ detail.children?.length || 0 }}
       </div>
-      <button (click)="handleEdit()">
+      <button (click)="handleEditToggleBtClick()">
         {{ editing ? 'Done' : 'Edit' }}
       </button>
-      <button (click)="handleRemove()">
+      <button (click)="handleRemoveBtClick()">
         Remove
       </button>
     </div>
@@ -52,11 +52,11 @@ export class PassengerDetailComponent {
 
   constructor() {}
 
-  handleNameChange(value: string) {
+  handleInput(value: string) {
     this.detail.fullname = value;
   }
 
-  handleEdit() {
+  handleEditToggleBtClick() {
     if (this.editing) {
       this.edit.emit(this.detail);
     }
@@ -64,7 +64,7 @@ export class PassengerDetailComponent {
     this.editing = !this.editing;
   }
 
-  handleRemove() {
+  handleRemoveBtClick() {
     this.remove.emit(this.detail);
   }
 }
