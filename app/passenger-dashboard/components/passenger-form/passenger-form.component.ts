@@ -12,8 +12,6 @@ import { Baggage } from "../../models/baggage.interface";
       #form="ngForm"
       novalidate
     >
-      {{ detail | json }}
-
       <div>
         Passenger name:
         <input
