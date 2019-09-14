@@ -5,10 +5,8 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
   template: `
     <div class="app">
-      <passenger-viewer></passenger-viewer>
+      <router-outlet></router-outlet>
     </div>
   `
 })
-export class AppComponent {
-
-}
+export class AppComponent {}
