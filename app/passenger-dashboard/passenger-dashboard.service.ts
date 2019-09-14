@@ -1,44 +1,40 @@
-import { Passenger } from "./models/passenger.interface";
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';// this is how we load features of RxJS Observables
+
+import { Passenger } from './models/passenger.interface';
+
+const PASSENGER_API: string = '/api/passengers';
+
+@Injectable()
 export class PassengerDashboardService {
-  constructor() {}
+  constructor(private http: Http) {}
 
-  getPassengers(): Passenger[]   {
-    return [{
-      id: 1,
-      fullname: 'Alain',
-      checkedIn: true,
-      checkInDate: 1490842000000,
-      children: null
-    }, {
-      id: 4,
-      fullname: 'Chuck',
-      checkedIn: false,
-      children: [
-        {
-          name: 'Lil Chuck',
-          age: 3
-        }, {
-          name: 'Junior',
-          age: 8
-        }
-      ]
-    }, {
-      id: 8,
-      fullname: 'Herb',
-      checkedIn: true,
-      checkInDate: 1490742000000,
-      children: null
-    }, {
-      id: 12,
-      fullname: 'Annie',
-      checkedIn: false,
-      children: [
-        {
-          name: 'Annies Girl',
-          age: 5
-        }
-      ]
-    }];
+  getPassengers(): Observable<Passenger[]> {
+    return this.http
+      .get(PASSENGER_API)
+      .map((response: Response) => response.json());
+  }
+
+  updadePassenger(passenger: Passenger): Observable<Passenger> {
+    // the options are not really needed in this case as they are the same as
+    // the defaults. they are here for demonstration purposes only
+    let options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+
+    return this.http
+      .put(`${PASSENGER_API}/${passenger.id}`, passenger, options)
+      .map((response: Response) => response.json());
+  }
+
+  removePassenger(passenger: Passenger): Observable<Passenger> {
+    return this.http
+      .delete(`${PASSENGER_API}/${passenger.id}`)
+      .map((response: Response) => response.json());
   }
 }
