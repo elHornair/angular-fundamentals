@@ -22,6 +22,14 @@ export class PassengerDashboardService {
     ;
   }
 
+  getPassenger(id: number): Observable<Passenger> {
+    return this.http
+      .get(`${PASSENGER_API}/${id}`)
+      .map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json()))
+    ;
+  }
+
   updadePassenger(passenger: Passenger): Observable<Passenger> {
     // the options are not really needed in this case as they are the same as
     // the defaults. they are here for demonstration purposes only
